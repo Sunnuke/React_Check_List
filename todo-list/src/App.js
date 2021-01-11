@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import React, {useState} from "react";
 import './App.css';
+import NewTodo from "./components/NewTodo";
+import TodoList from "./components/TodoList";
+
 
 function App() {
+  const [todo, setTodo] = useState([
+    {body: 'Bathroom', completed: false},
+    {body: 'Bedroom', completed: false},
+    {body: 'Trash', completed: false},
+    {body: 'Living Room', completed: false},
+    {body: 'Office', completed: false}
+  ]);
+
+  // newTask={newTask}
+  const newTask = (addTodo) => {
+    const list = [...todo];
+    list.push(addTodo);
+    setTodo(list);
+  }
+
+  const deleteTodo = (deleteTodo) => {
+    const list = [...todo];
+    const newList = list.filter( (todo, idx) => idx !== deleteTodo )
+    setTodo(newList);
+    console.log(deleteTodo);
+    console.log(list);
+    console.log(newList);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewTodo newTask={newTask} />
+      <TodoList list={todo} setList={setTodo}  deleteTodo={deleteTodo} />
     </div>
   );
 }
